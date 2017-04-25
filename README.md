@@ -1,7 +1,8 @@
 # sohwhatson
 
 # Author
-Justin Tam (vkimmp3)
+Justin Tam
+github.com/vkimmp3
 
 ## Description
 Recommends to users shows and events at the Sydney Opera House based on their custom inputs of interests and moods.
@@ -30,12 +31,22 @@ Dialogue tree guides user organically through commands.
 3.  Alternatively, copy files from this repository into your `scripts` directory.
 4.  Restart your Hubot.
 
-## Challenges / Next steps
+## Challenges
 - Code originally based on genre types ("contemporary music" "classical music" "talks" "conferences"). This was difficult to contain based on the amount of variables (ie. a user could say "I want to see baroque music"), so this was instead changed to "moodType". This allowed for three categories ("cool" | "fancy" | "stimulating"), which also allowed for breadth of show recommendations beyond genre.
-- a "tell me more" command that expands on show information, sends more pictures and links
-- storing user info based on likes, then suggesting other shows based on previous "like" info stored
-- random greeting messages when entering and leaving a channel
-- a timeout command that suggests commands and/or shows if the user remains idle for too long
-- after user picks a show, also have "tell me more" or "buy tickets" options
-- create more arrays to include wider scope of programming and events at Opera House
-- alternate dialogue tree if user wishes to visit, but not attend an event (ie. dining in, a quick lunch, guided tours)
+- Hubot automatically filters out images from Instagram and YouTube after continued posting. Need to override this to enable more photos and videos posted.
+- Difficulty implementing variables of commands for .hear. When listing too many variables, bug causes code to log responses automatically on an infinite loop.
+- Experimenting with the most appropriate formatting, eg. using `\n` to bump Instagram links to the next line.  
+- Because Hubot only reads commands ad verbum, it was necessary to include capitalisation and slight variants on the more generic commands (eg. "hello" vs. "Hi").
+
+## Next steps
+- Not sure what purpose a for loop iterating over a collection would serve with this bot? Redundant?
+- Random choice often picks the same thing a few times in a row. How can this be randomised to cycle through all choices before repeating?
+- When using more than two variants for .hear (eg. Hi | hi | Hello | hello | Hey | hey), bot speaks without commands and loops infinitely? How to give it more options, or is this limited with the Hubot framework?
+- Add a "Tell me more" command that expands on show information, sends more pictures and links.
+- Link out to sydneyoperahouse.com should users want to buy tickets to an event.
+- Enable bot to store user info based on likes, then suggest other shows based on previous "like" info stored.
+- Generate random greeting messages when entering and leaving a channel.
+- Call a timeout command that suggests commands and/or shows if the user remains idle for too long.
+- Create more arrays/objects to include wider scope of programming and events at Opera House.
+- Alternate dialogue tree if user wishes to visit, but not attend an event (ie. dining in, a quick lunch, guided tours).
+- Integrate with Google Maps?
