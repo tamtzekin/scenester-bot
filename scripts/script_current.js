@@ -1,4 +1,4 @@
-// Bot that tells users what shows are on at the Sydney Opera House this week.
+// Bot that recommends shows and events at the Sydney Opera House to users based on their mood inputs.
 
 module.exports = (bot) => {
 
@@ -10,43 +10,45 @@ module.exports = (bot) => {
 });
 
   bot.hear(/What's on today?|what's on today?|whats on today|whats on today?/, res => { // when i add more variants, it loops my code
-    res.reply("Just tell me what you like and I'll recommend something (try typing '@sohwhatson I like ...' and then what type of show you want to see).")
-    return res.reply("Well, today we've got the classics like ballet and classical music. If you're more adventurous, we have talks and contemporary music.") // put real date here?
+    res.reply("What are you looking for? Let me help you pick. (Try typing, '@sohwhatson Show me something cool' / 'Show me something fancy' / 'Show me something stimulating').")
+    return res.reply("There's so much on! From the classics like ballet, to guitar-playing swooners.") // put real date here?
 });
 
-// Defines arrays for different kinds of shows, arranged by genre.
-const musicShows = [
+// Defines arrays for different kinds of shows, arranged by genre or "mood".
+const coolShows = [
   "We don't just do orchestras in here. The rave godfathers Underworld are playing tonight!" + "\nhttps://www.youtube.com/watch?v=krN3ledny-Y",
   "Billy Bragg & Joe Henry are serenading together in the Concert Hall this weekend. Proper political balladeers. " + "\nhttps://www.youtube.com/watch?v=mgwU4zCEJtY",
-  "Mary J. Blige is on this Tuesday. The reigning queen of soul! " + "\nhttps://www.youtube.com/watch?v=BgcSHzgZ8gQ" // date night tag
+  "Mary J. Blige is on this Tuesday. The reigning queen of soul! " + "\nhttps://www.youtube.com/watch?v=BgcSHzgZ8gQ", // date night tag
+  "The Sydney Symphony Orchestra are performing the score live to the first Harry Potter movie. Haven't seen that one for years! " + "\nhttps://www.youtube.com/watch?v=YOVS9yn2R7c"
 ];
 
-const classicShows = [
-  "Are you into ballet? You're fancy, huh? You might like Faster by The Australian Ballet." + "\nhttps://www.youtube.com/watch?v=W5I28CQBIro",
-  "If you like the classics, you really need to see The Nutcracker ... with an Australian twist. " + "\nhttps://www.instagram.com/p/BS4mmP2F2V0/",
-  "Djuki Mala might be your thing. Think contemporary dance fused with traditional Indigenous movement. " + "https://www.instagram.com/p/BTOWSi9FdkK/"
+const fancyShows = [
+  "Are you into ballet? But you like the edgier stuff, right? You'll enjoy 'Faster'' by The Australian Ballet." + "\nhttps://www.youtube.com/watch?v=W5I28CQBIro",
+  "If you like the classics, you really need to see 'The Nutcracker' ... with an Australian twist. " + "\nhttps://www.instagram.com/p/BS4mmP2F2V0/",
+  "Joshua Bell and Academy of St Martin in the Fields are performing twice this weekend! Beethoven, Mozart, Schumann, Mendelssohn...quite possibly the best orchestra in the world right now. " + "\nhttps://www.youtube.com/watch?v=laGT9IB2bFo"
 ];
 
-const talksShows = [
-  "Singer and poet legend Patti Smith is doing a talk in the Concert Hall this Sunday. It'll be wild, I'm sure.",
-  "Second here. "
+const stimulatingShows = [
+  "Singer and poet legend Patti Smith is doing a talk in the Concert Hall this Sunday. It'll challenge you, I'm sure. " + "\nhttps://www.instagram.com/p/4mYawpRc6T/",
+  "Djuki Mala might be your thing. Think contemporary dance fused with traditional Indigenous movement. " + "\nhttps://www.instagram.com/p/BTOWSi9FdkK/",
+  "We're proud to present 'The 7 Stages of Grieving', an Aboriginal classic which confronts the grief of Indigenous people and their hopes for reconciliation. " + "\nhttps://www.youtube.com/watch?v=zbPuSX2wiC4"
 ];
 
-// Visitor picks the type of show they want to see and bot gives random suggestion based on genre arrays.
-  bot.respond(/I like (.*)/i, res => {
-    const genreType = res.match[1];
+// User picks the type ("mood") of show they want to see and bot gives randomised suggestions based on moodType arrays.
+  bot.respond(/Show me something (.*)/i, res => {
+    const moodType = res.match[1];
 
-    console.log(genreType)
-    if (genreType === "music") {
-      return res.send("Music? There's a lot of music out there. You're going to have to be a bit more specific. Try 'I like the classics' or 'I like contemporary music'.")
-    } else if (genreType === "contemporary music") {
-      return res.send(res.random(musicShows));
-    } else if (genreType === "the classics") {
-      return res.send(res.random(classicShows));
-    } else if (genreType === "talks") {
-      return res.send(res.random(talksShows));
+    console.log(moodType)
+    if (moodType === "music") {
+      return res.send("Music? There's a lot of music out there. You're going to have to be a bit more specific. If you want something edgy, try typing '@sohwhatson Show me something cool'")
+    } else if (moodType === "cool") {
+      return res.send(res.random(coolShows));
+    } else if (moodType === "fancy") {
+      return res.send(res.random(fancyShows));
+    } else if (moodType === "stimulating") {
+      return res.send(res.random(stimulatingShows));
     } else {
-      return res.reply(`${genreType}? I don't think we have ${genreType} on today. Is there anything else you'd like to see? Maybe talks, or family shows? Orchestras?`)
+      return res.reply(`${moodType}? I don't think we have anything ${moodType} on today. Try typing '@sohwhatson Show me something fancy'`)
     }
   });
 }
@@ -67,17 +69,3 @@ const talksShows = [
 // //time out command
 // //Are you still there? Just tell me "I want to see" followed by the type of show.
 // // You could say, "I want to see family shows," or "I want to see contemporary music".
-//
-//
-
-//
-// // // Defines arrays for greetings and goodbyes
-// // helloText = ['Hey there!', 'Welcome!', 'Gday!']
-// // goodbyeText = ['Oh, youre going already? Enjoy your day!', 'Dont forget to take a selfie before you leave!', 'Enjoy your stay in sunny Sydney!', 'Come back soon! Theres plenty happening at the House.']
-//
-// // Triggers random greeting message when visitor enters room, goodbye message when visitor leaves.
-//   // bot.enter (res) =>
-//   //   res.send res.random helloText
-//   // bot.leave (res) =>
-//   //   res.send res.random goodbyeText
-//
